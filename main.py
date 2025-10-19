@@ -70,3 +70,9 @@ async def extract_text(file: UploadFile = File(...)):
         return {"error": "Unsupported file type"}
 
     return {"filename": file.filename, "extracted_text": text[:3000]}  # limit response
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
+
