@@ -1,24 +1,26 @@
-# Use official Python slim image
+# -------------------- Base Image --------------------
 FROM python:3.10-slim
 
-# Install system dependencies for Tesseract & PDF conversion
+# -------------------- Install System Dependencies --------------------
 RUN apt-get update && \
-    apt-get install -y tesseract-ocr libtesseract-dev poppler-utils && \
-    apt-get clean
+    apt-get install -y \
+    tesseract-ocr \
+    libtesseract-dev \
+    poppler-utils \
+    && apt-get clean
 
-# Set working directory
+# -------------------- Set Working Directory --------------------
 WORKDIR /app
 
-# Copy Python dependencies and install
+# -------------------- Copy Requirements and Install --------------------
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project files
+# -------------------- Copy Project Files --------------------
 COPY . .
 
-# Expose port 10000 for FastAPI
+# -------------------- Expose Port --------------------
 EXPOSE 10000
 
-# Run FastAPI
+# -------------------- Run FastAPI using $PORT from Render --------------------
 CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-10000}"]
-
