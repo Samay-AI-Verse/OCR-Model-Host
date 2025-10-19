@@ -7,3 +7,4 @@ openpyxl
 PyMuPDF
 pandas
 Pillow
+python-multipart
